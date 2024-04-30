@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "851463586735",
+    "project_id": "mobileappca2-90046",
+    "storage_bucket": "mobileappca2-90046.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851463586735:android:70ae924933137becaaa55a",
+        "android_client_info": {
+          "package_name": "ie.setu.mobileapp2ca2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpe9RYm-JnnjUSOEsD667M3z5qY2GQXa4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851463586735:android:a1f8878ec9bb8a22aaa55a",
+        "android_client_info": {
+          "package_name": "ie.wit.donationx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpe9RYm-JnnjUSOEsD667M3z5qY2GQXa4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
