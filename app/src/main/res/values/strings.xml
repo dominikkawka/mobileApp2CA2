@@ -14,6 +14,7 @@
     <string name="enter_amount">Enter Amount</string>
     <string name="action_donate">Donate</string>
     <string name="action_report">Report</string>
+    <string name="action_location">Location</string>
 
     <string name="total_donated">$%d</string>
 
@@ -63,5 +64,8 @@
 
     <string name="update">Update</string>
     <string name="delete">Delete</string>
+    <string name="default_web_client_id">851463586735-teddl0iimiqrusg1gb3pbtnp4a51ddvp.apps.googleusercontent.com</string>
+    <string name="google_api_key">AIzaSyDpe9RYm-JnnjUSOEsD667M3z5qY2GQXa4</string>
+    <string name="select_profile_image">Select Profile Image</string>
 
 </resources>

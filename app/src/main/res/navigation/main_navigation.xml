@@ -49,5 +49,14 @@
             android:name="donationid"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="ie.setu.mobileapp2ca2.ui.map.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_donationDetailFragment"
+            app:destination="@id/donationDetailFragment" />
+    </fragment>
 
 </navigation>

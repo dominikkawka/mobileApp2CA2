@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "851463586735",
+    "firebase_url": "https://mobileappca2-90046-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "mobileappca2-90046",
     "storage_bucket": "mobileappca2-90046.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "ie.setu.mobileapp2ca2"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "851463586735-q7s77tpnje27dbv1nt371g1sbmke478v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ie.setu.mobileapp2ca2",
+            "certificate_hash": "c62dfde9dd7f347ccaeef060805a899957765b09"
+          }
+        },
+        {
+          "client_id": "851463586735-teddl0iimiqrusg1gb3pbtnp4a51ddvp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDpe9RYm-JnnjUSOEsD667M3z5qY2GQXa4"
@@ -20,26 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:851463586735:android:a1f8878ec9bb8a22aaa55a",
-        "android_client_info": {
-          "package_name": "ie.wit.donationx"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDpe9RYm-JnnjUSOEsD667M3z5qY2GQXa4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851463586735-teddl0iimiqrusg1gb3pbtnp4a51ddvp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

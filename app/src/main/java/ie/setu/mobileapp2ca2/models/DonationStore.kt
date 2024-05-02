@@ -1,14 +1,17 @@
 package ie.setu.mobileapp2ca2.models
 
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseUser
 
 interface DonationStore {
     fun findAll(donationsList:
                 MutableLiveData<List<DonationModel>>)
-    fun findAll(email:String,
-                donationsList: MutableLiveData<List<DonationModel>>)
-    fun findById(email:String, id: String, donation: MutableLiveData<DonationModel>)
-    fun create(donation: DonationModel)
-    fun delete(email:String,id: String)
-    fun update(email: String,id: String, donation: DonationModel)
+    fun findAll(userid:String,
+                donationsList:
+                MutableLiveData<List<DonationModel>>)
+    fun findById(userid:String, donationid: String,
+                 donation: MutableLiveData<DonationModel>)
+    fun create(firebaseUser: MutableLiveData<FirebaseUser>, donation: DonationModel)
+    fun delete(userid:String, donationid: String)
+    fun update(userid:String, donationid: String, donation: DonationModel)
 }

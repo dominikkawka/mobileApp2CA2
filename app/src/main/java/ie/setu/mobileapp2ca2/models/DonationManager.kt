@@ -1,6 +1,7 @@
 package ie.setu.mobileapp2ca2.models
 
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseUser
 import ie.setu.mobileapp2ca2.api.DonationClient
 import ie.setu.mobileapp2ca2.api.DonationWrapper
 import retrofit2.Call
@@ -64,7 +65,7 @@ object DonationManager : DonationStore {
         })
     }
 
-    override fun create( donation: DonationModel) {
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, donation: DonationModel) {
 
         val call = DonationClient.getApi().post(donation.email,donation)
 

@@ -1,19 +1,27 @@
 package ie.setu.mobileapp2ca2.utils
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.view.animation.Transformation
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.makeramen.roundedimageview.RoundedTransformationBuilder
 import ie.setu.mobileapp2ca2.R
+import ie.setu.mobileapp2ca2.adapters.DonationAdapter
+import java.io.IOException
 
 fun createLoader(activity: FragmentActivity) : AlertDialog {
     val loaderBuilder = AlertDialog.Builder(activity)
@@ -54,6 +62,32 @@ fun serviceAvailableMessage(activity: FragmentActivity) {
     ).show()
 }
 
+fun customTransformation() : com.squareup.picasso.Transformation? =
+    RoundedTransformationBuilder()
+        .borderColor(Color.WHITE)
+        .borderWidthDp(2F)
+        .cornerRadiusDp(35F)
+        .oval(false)
+        .build()
+
+fun showImagePicker(intentLauncher : ActivityResultLauncher<Intent>) {
+    var chooseFile = Intent(Intent.ACTION_OPEN_DOCUMENT)
+    chooseFile.type = "image/*"
+    chooseFile = Intent.createChooser(chooseFile, R.string.select_profile_image.toString())
+    intentLauncher.launch(chooseFile)
+}
+
+fun readImageUri(resultCode: Int, data: Intent?): Uri? {
+    var uri: Uri? = null
+    if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+        try { uri = data.data }
+        catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+    return uri
+}
+
 abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_swipe_delete)
@@ -70,7 +104,7 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
          * if (viewHolder?.itemViewType == YourAdapter.SOME_TYPE) return 0
          * if (viewHolder?.adapterPosition == 0) return 0
          */
-        if (viewHolder.adapterPosition == 10) return 0
+        if ((viewHolder as DonationAdapter.MainHolder).readOnlyRow) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
@@ -134,7 +168,7 @@ abstract class SwipeToEditCallback(context: Context) : ItemTouchHelper.SimpleCal
          * if (viewHolder?.itemViewType == YourAdapter.SOME_TYPE) return 0
          * if (viewHolder?.adapterPosition == 0) return 0
          */
-        if (viewHolder.adapterPosition == 10) return 0
+        if ((viewHolder as DonationAdapter.MainHolder).readOnlyRow) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
