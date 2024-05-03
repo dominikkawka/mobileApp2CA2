@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/donateFragment"
-        android:name="ie.setu.mobileapp2ca2.ui.donate.DonateFragment"
+        android:name="ie.setu.mobileapp2ca2.ui.running.RunningFragment"
         android:label="@string/action_donate"
         tools:layout="@layout/fragment_donate" >
         <action
@@ -39,15 +39,24 @@
         tools:layout="@layout/fragment_aboutus" />
     <fragment
         android:id="@+id/donationDetailFragment"
-        android:name="ie.setu.mobileapp2ca2.ui.detail.DonationDetailFragment"
+        android:name="ie.setu.mobileapp2ca2.ui.detail.RunningDetailFragment"
         android:label="Donation Detail"
         tools:layout="@layout/fragment_donation_detail" >
         <action
             android:id="@+id/action_donationDetailFragment_to_reportFragment"
             app:destination="@id/reportFragment" />
         <argument
-            android:name="donationid"
+            android:name="runningid"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="ie.setu.mobileapp2ca2.ui.map.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_donationDetailFragment"
+            app:destination="@id/donationDetailFragment" />
     </fragment>
 
 </navigation>

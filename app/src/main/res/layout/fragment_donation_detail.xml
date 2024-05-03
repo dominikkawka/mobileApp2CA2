@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="donationvm"
-            type="ie.setu.mobileapp2ca2.ui.detail.DonationDetailViewModel" />
+            name="runningvm"
+            type="ie.setu.mobileapp2ca2.ui.detail.RunningDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.detail.DonationDetailFragment">
+        tools:context=".ui.detail.RunningDetailFragment">
 
         <TextView
             android:id="@+id/textView4"
@@ -53,7 +53,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="4dp"
             android:textAlignment="viewStart"
-            android:text="@={donationvm.observableDonation.message}"
+            android:text="@={runningvm.observableDonation.description}"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editPaymenttype" />
@@ -65,7 +65,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="4dp"
             android:gravity="center"
-            android:text="@{donationvm.observableDonation.paymentmethod}"
+            android:text="@{runningvm.observableDonation.title}"
             android:textAlignment="viewStart"
             android:textColor="@color/color_primary"
             android:textSize="24sp"
@@ -81,7 +81,7 @@
             android:ems="10"
             android:inputType="number"
             android:textSize="24sp"
-            android:text="@={``+ donationvm.observableDonation.upvotes}"
+            android:text="@={``+ runningvm.observableDonation.difficulty}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editMessage" />
 
@@ -95,7 +95,7 @@
             android:inputType="number"
             android:textAlignment="viewStart"
             android:textSize="24sp"
-            android:text="@={``+ donationvm.observableDonation.amount}"
+            android:text="@={``+ runningvm.observableDonation.distance}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
