@@ -5,9 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.MobileApp2CA2" parent="Base.Theme.MobileApp2CA2" />
-
-    <style name="Theme.DonationX" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MobileApp2CA2" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryVariant">@color/color_secondary</item>
@@ -20,18 +18,18 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.DonationX.NoActionBar">
+    <style name="Theme.MobileApp2CA2.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.DonationX.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.MobileApp2CA2.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.DonationX.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.MobileApp2CA2.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- START Firebase Resources-->
     <!-- Activity with no Title -->
-    <style name="ThemeOverlay.MyNoTitleActivity" parent="Theme.DonationX">
+    <style name="ThemeOverlay.MyNoTitleActivity" parent="Theme.MobileApp2CA2">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -48,7 +46,7 @@
     <!-- Light EditTexts -->
     <style name="ThemeOverlay.MyLightEditText" parent="ThemeOverlay.AppCompat.Dark"/>
 
-    <style name="ThemeOverlay.MyTextDetail" parent="Theme.DonationX">
+    <style name="ThemeOverlay.MyTextDetail" parent="Theme.MobileApp2CA2">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fadeScrollbars">true</item>
@@ -59,12 +57,12 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="ThemeOverlay.FirebaseIcon" parent="Theme.DonationX">
+    <style name="ThemeOverlay.FirebaseIcon" parent="Theme.MobileApp2CA2">
         <item name="android:layout_marginTop">@dimen/icon_top_margin</item>
         <item name="android:layout_marginBottom">@dimen/icon_bottom_margin</item>
     </style>
 
-    <style name="ThemeOverlay.MyTitleText" parent="Theme.DonationX">
+    <style name="ThemeOverlay.MyTitleText" parent="Theme.MobileApp2CA2">
         <item name="android:gravity">center</item>
         <item name="android:textSize">30sp</item>
     </style>

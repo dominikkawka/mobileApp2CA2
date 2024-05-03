@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedTransformationBuilder
 import ie.setu.mobileapp2ca2.R
-import ie.setu.mobileapp2ca2.adapters.DonationAdapter
+import ie.setu.mobileapp2ca2.adapters.RunningAdapter
 import java.io.IOException
 
 fun createLoader(activity: FragmentActivity) : AlertDialog {
@@ -104,7 +104,7 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
          * if (viewHolder?.itemViewType == YourAdapter.SOME_TYPE) return 0
          * if (viewHolder?.adapterPosition == 0) return 0
          */
-        if ((viewHolder as DonationAdapter.MainHolder).readOnlyRow) return 0
+        if ((viewHolder as RunningAdapter.MainHolder).readOnlyRow) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
@@ -168,7 +168,7 @@ abstract class SwipeToEditCallback(context: Context) : ItemTouchHelper.SimpleCal
          * if (viewHolder?.itemViewType == YourAdapter.SOME_TYPE) return 0
          * if (viewHolder?.adapterPosition == 0) return 0
          */
-        if ((viewHolder as DonationAdapter.MainHolder).readOnlyRow) return 0
+        if ((viewHolder as RunningAdapter.MainHolder).readOnlyRow) return 0
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 

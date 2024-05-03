@@ -14,10 +14,10 @@ import ie.setu.mobileapp2ca2.databinding.FragmentDonationDetailBinding
 import ie.setu.mobileapp2ca2.ui.auth.LoggedInViewModel
 import ie.setu.mobileapp2ca2.ui.report.ReportViewModel
 
-class DonationDetailFragment : Fragment() {
+class RunningDetailFragment : Fragment() {
 
-    private lateinit var detailViewModel: DonationDetailViewModel
-    private val args by navArgs<DonationDetailFragmentArgs>()
+    private lateinit var detailViewModel: RunningDetailViewModel
+    private val args by navArgs<RunningDetailFragmentArgs>()
     private var _fragBinding: FragmentDonationDetailBinding? = null
     private val fragBinding get() = _fragBinding!!
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
@@ -35,7 +35,7 @@ class DonationDetailFragment : Fragment() {
 
         fragBinding.editDonationButton.setOnClickListener {
             detailViewModel.updateDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!,
-                args.donationid, fragBinding.donationvm?.observableDonation!!.value!!)
+                args.runningid, fragBinding.runningvm?.observableDonation!!.value!!)
             findNavController().navigateUp()
         }
 
@@ -45,22 +45,20 @@ class DonationDetailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        detailViewModel = ViewModelProvider(this).get(DonationDetailViewModel::class.java)
+        detailViewModel = ViewModelProvider(this).get(RunningDetailViewModel::class.java)
         detailViewModel.observableDonation.observe(viewLifecycleOwner, Observer { render() })
         return root
     }
 
-    private fun render(/*donation: DonationModel*/) {
-        // fragBinding.editAmount.setText(donation.amount.toString())
-        // fragBinding.editPaymenttype.text = donation.paymentmethod
+    private fun render() {
         fragBinding.editMessage.setText("A Message")
         fragBinding.editUpvotes.setText("0")
-        fragBinding.donationvm = detailViewModel
+        fragBinding.runningvm = detailViewModel
     }
 
     override fun onResume() {
         super.onResume()
-        detailViewModel.getDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!, args.donationid)
+        detailViewModel.getDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!, args.runningid)
 
     }
 

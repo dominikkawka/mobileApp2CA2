@@ -1,15 +1,14 @@
-package ie.setu.mobileapp2ca2.ui.donate
+package ie.setu.mobileapp2ca2.ui.running
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import ie.setu.mobileapp2ca2.firebase.FirebaseDBManager
-import ie.setu.mobileapp2ca2.models.DonationManager
-import ie.setu.mobileapp2ca2.models.DonationModel
-import ie.wit.donationx.firebase.FirebaseImageManager
+import ie.setu.mobileapp2ca2.models.RunningModel
+import ie.setu.mobileapp2ca2.firebase.FirebaseImageManager
 
-class DonateViewModel : ViewModel() {
+class RunningViewModel : ViewModel() {
 
     private val status = MutableLiveData<Boolean>()
 
@@ -17,11 +16,10 @@ class DonateViewModel : ViewModel() {
         get() = status
 
     fun addDonation(firebaseUser: MutableLiveData<FirebaseUser>,
-                    donation: DonationModel) {
+                    running: RunningModel) {
         status.value = try {
-            //DonationManager.create(donation)
-            donation.profilepic = FirebaseImageManager.imageUri.value.toString()
-            FirebaseDBManager.create(firebaseUser,donation)
+            running.profilepic = FirebaseImageManager.imageUri.value.toString()
+            FirebaseDBManager.create(firebaseUser,running)
             true
         } catch (e: IllegalArgumentException) {
             false

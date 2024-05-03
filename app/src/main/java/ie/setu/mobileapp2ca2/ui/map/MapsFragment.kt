@@ -28,7 +28,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import ie.setu.mobileapp2ca2.R
-import ie.setu.mobileapp2ca2.models.DonationModel
+import ie.setu.mobileapp2ca2.models.RunningModel
 import ie.setu.mobileapp2ca2.ui.auth.LoggedInViewModel
 import ie.setu.mobileapp2ca2.ui.report.ReportViewModel
 import ie.setu.mobileapp2ca2.utils.createLoader
@@ -58,9 +58,9 @@ class MapsFragment : Fragment() {
 
             reportViewModel.observableDonationsList.observe(
                 viewLifecycleOwner,
-                Observer { donations ->
-                    donations?.let {
-                        render(donations as ArrayList<DonationModel>)
+                Observer { tracks ->
+                    tracks?.let {
+                        render(tracks as ArrayList<RunningModel>)
                         hideLoader(loader)
                     }
                 })
@@ -80,20 +80,20 @@ class MapsFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
-    private fun render(donationsList: ArrayList<DonationModel>) {
+    private fun render(tracksList: ArrayList<RunningModel>) {
         var markerColour: Float
-        if (donationsList.isNotEmpty()) {
+        if (tracksList.isNotEmpty()) {
             mapsViewModel.map.clear()
-            donationsList.forEach {
+            tracksList.forEach {
                 markerColour = if(it.email.equals(this.reportViewModel.liveFirebaseUser.value!!.email))
                     BitmapDescriptorFactory.HUE_AZURE + 5
                 else
                     BitmapDescriptorFactory.HUE_RED
 
                 mapsViewModel.map.addMarker(
-                    MarkerOptions().position(LatLng(it.latitude, it.longitude))
-                        .title("${it.paymentmethod} €${it.amount}")
-                        .snippet(it.message)
+                    MarkerOptions().position(LatLng(it.startLatitude, it.startLongitude))
+                        .title("${it.title} €${it.difficulty}")
+                        .snippet(it.description)
                         .icon(BitmapDescriptorFactory.defaultMarker(markerColour ))
                 )        }
         }

@@ -6,11 +6,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object DonationClient {
+object RunningClient {
 
-    val serviceURL = "https://donationx-multi-web-server.onrender.com"
+    val serviceURL = "https://mobileApp2CA2-multi-web-server.onrender.com"
 
-    fun getApi() : DonationService {
+    fun getApi() : RunningService {
 
         val gson = GsonBuilder().create()
 
@@ -25,6 +25,6 @@ object DonationClient {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
-        return apiInterface.create(DonationService::class.java)
+        return apiInterface.create(RunningService::class.java)
     }
 }

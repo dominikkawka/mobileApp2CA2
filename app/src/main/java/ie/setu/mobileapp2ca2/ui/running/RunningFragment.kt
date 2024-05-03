@@ -1,4 +1,4 @@
-package ie.setu.mobileapp2ca2.ui.donate
+package ie.setu.mobileapp2ca2.ui.running
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,20 +19,19 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import ie.setu.mobileapp2ca2.R
 import ie.setu.mobileapp2ca2.databinding.FragmentDonateBinding
-import ie.setu.mobileapp2ca2.main.DonationXApp
-import ie.setu.mobileapp2ca2.models.DonationModel
+import ie.setu.mobileapp2ca2.models.RunningModel
 import ie.setu.mobileapp2ca2.ui.auth.LoggedInViewModel
 import ie.setu.mobileapp2ca2.ui.map.MapsViewModel
 import ie.setu.mobileapp2ca2.ui.report.ReportViewModel
 
-class DonateFragment : Fragment() {
+class RunningFragment : Fragment() {
 
-    var totalDonated = 0
+    var totalTracks = 0
     private var _fragBinding: FragmentDonateBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val fragBinding get() = _fragBinding!!
-    private lateinit var donateViewModel: DonateViewModel
+    private lateinit var donateViewModel: RunningViewModel
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
     private val mapsViewModel: MapsViewModel by activityViewModels()
 
@@ -49,7 +48,7 @@ class DonateFragment : Fragment() {
         val root = fragBinding.root
         // activity?.title = getString(R.string.action_donate)
         setupMenu()
-        donateViewModel = ViewModelProvider(this).get(DonateViewModel::class.java)
+        donateViewModel = ViewModelProvider(this).get(RunningViewModel::class.java)
         donateViewModel.observableStatus.observe(viewLifecycleOwner, Observer { status ->
             status?.let { render(status) }
         })
@@ -92,19 +91,19 @@ class DonateFragment : Fragment() {
         layout.donateButton.setOnClickListener {
             val amount = if (layout.paymentAmount.text.isNotEmpty())
                 layout.paymentAmount.text.toString().toInt() else layout.amountPicker.value
-            if (totalDonated >= layout.progressBar.max)
+            if (totalTracks >= layout.progressBar.max)
                 Toast.makeText(context, "Donate Amount Exceeded!", Toast.LENGTH_LONG).show()
             else {
                 val paymentmethod =
                     if (layout.paymentMethod.checkedRadioButtonId == R.id.Direct) "Direct" else "Paypal"
-                totalDonated += amount
-                layout.totalSoFar.text = getString(R.string.total_donated, totalDonated)
-                layout.progressBar.progress = totalDonated
+                totalTracks += amount
+                layout.totalSoFar.text = getString(R.string.total_donated, totalTracks)
+                layout.progressBar.progress = totalTracks
                 donateViewModel.addDonation(loggedInViewModel.liveFirebaseUser,
-                    DonationModel(paymentmethod = paymentmethod,amount = amount,
+                    RunningModel(title = paymentmethod,difficulty = amount,
                         email = loggedInViewModel.liveFirebaseUser.value?.email!!,
-                        latitude = mapsViewModel.currentLocation.value!!.latitude,
-                        longitude = mapsViewModel.currentLocation.value!!.longitude))
+                        startLatitude = mapsViewModel.currentLocation.value!!.latitude,
+                        startLongitude = mapsViewModel.currentLocation.value!!.longitude))
             }
         }
     }
@@ -151,9 +150,9 @@ class DonateFragment : Fragment() {
         super.onResume()
         val reportViewModel = ViewModelProvider(this).get(ReportViewModel::class.java)
         reportViewModel.observableDonationsList.observe(viewLifecycleOwner, Observer {
-            totalDonated = reportViewModel.observableDonationsList.value!!.sumBy { it.amount }
-            fragBinding.progressBar.progress = totalDonated
-            fragBinding.totalSoFar.text = getString(R.string.total_donated, totalDonated)
+            totalTracks = reportViewModel.observableDonationsList.value!!.sumBy { it.difficulty }
+            fragBinding.progressBar.progress = totalTracks
+            fragBinding.totalSoFar.text = getString(R.string.total_donated, totalTracks)
         })
     }
 }

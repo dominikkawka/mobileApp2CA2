@@ -32,7 +32,7 @@ import ie.setu.mobileapp2ca2.utils.checkLocationPermissions
 import ie.setu.mobileapp2ca2.utils.isPermissionGranted
 import ie.setu.mobileapp2ca2.utils.readImageUri
 import ie.setu.mobileapp2ca2.utils.showImagePicker
-import ie.wit.donationx.firebase.FirebaseImageManager
+import ie.setu.mobileapp2ca2.firebase.FirebaseImageManager
 import timber.log.Timber
 
 class Home : AppCompatActivity() {
@@ -53,7 +53,11 @@ class Home : AppCompatActivity() {
         setContentView(homeBinding.root)
         drawerLayout = homeBinding.drawerLayout
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+
+        //prevents crashing when switching between night/light mode
+        if (supportActionBar == null) {
+            setSupportActionBar(toolbar)
+        }
 
         val navController = findNavController(R.id.nav_host_fragment)
 
@@ -71,15 +75,6 @@ class Home : AppCompatActivity() {
         val navView = homeBinding.navView
         navView.setupWithNavController(navController)
         initNavHeader()
-//        navController.addOnDestinationChangedListener { _, destination, arguments ->
-//            when(destination.id) {
-//                R.id.reportFragment -> {
-//                    val argument = NavArgument.Builder().setDefaultValue(totalDonated).build()
-//                    destination.addArgument("totalDonated", argument)
-//
-//                }
-//            }
-//        }
     }
 
     public override fun onStart() {

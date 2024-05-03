@@ -7,17 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ie.setu.mobileapp2ca2.R
 import ie.setu.mobileapp2ca2.databinding.CardDonationBinding
-import ie.setu.mobileapp2ca2.models.DonationModel
+import ie.setu.mobileapp2ca2.models.RunningModel
 import ie.setu.mobileapp2ca2.utils.customTransformation
 
-interface DonationClickListener {
-    fun onDonationClick(donation: DonationModel)
+interface RunningClickListener {
+    fun onDonationClick(track: RunningModel)
 }
 
-class DonationAdapter constructor(private var donations: ArrayList<DonationModel>,
-                                  private val listener: DonationClickListener,
+class RunningAdapter constructor(private var tracks: ArrayList<RunningModel>,
+                                  private val listener: RunningClickListener,
                                   private val readOnly: Boolean)
-    : RecyclerView.Adapter<DonationAdapter.MainHolder>() {
+    : RecyclerView.Adapter<RunningAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardDonationBinding
@@ -27,29 +27,29 @@ class DonationAdapter constructor(private var donations: ArrayList<DonationModel
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val donation = donations[holder.adapterPosition]
-        holder.bind(donation,listener)
+        val track = tracks[holder.adapterPosition]
+        holder.bind(track,listener)
     }
 
     fun removeAt(position: Int) {
-        donations.removeAt(position)
+        tracks.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    override fun getItemCount(): Int = donations.size
+    override fun getItemCount(): Int = tracks.size
 
     inner class MainHolder(val binding : CardDonationBinding, private val readOnly : Boolean) :
         RecyclerView.ViewHolder(binding.root) {
         val readOnlyRow = readOnly
 
-        fun bind(donation: DonationModel, listener: DonationClickListener) {
-            binding.root.tag = donation
-            binding.donation = donation
+        fun bind(track: RunningModel, listener: RunningClickListener) {
+            binding.root.tag = track
+            binding.running = track
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
-            binding.root.setOnClickListener { listener.onDonationClick(donation) }
+            binding.root.setOnClickListener { listener.onDonationClick(track) }
             binding.executePendingBindings()
             customTransformation()?.let {
-                Picasso.get().load(donation.profilepic.toUri())
+                Picasso.get().load(track.profilepic.toUri())
                     .resize(200, 200)
                     .transform(it)
                     .centerCrop()

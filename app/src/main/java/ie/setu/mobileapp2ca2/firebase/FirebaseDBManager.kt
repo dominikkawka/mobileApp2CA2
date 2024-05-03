@@ -7,116 +7,116 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import ie.setu.mobileapp2ca2.models.DonationModel
-import ie.setu.mobileapp2ca2.models.DonationStore
+import ie.setu.mobileapp2ca2.models.RunningModel
+import ie.setu.mobileapp2ca2.models.RunningStore
 import timber.log.Timber
 
 
-object FirebaseDBManager : DonationStore {
+object FirebaseDBManager : RunningStore {
 
     var database: DatabaseReference = FirebaseDatabase.getInstance().reference
 
-    override fun findAll(donationsList: MutableLiveData<List<DonationModel>>) {
-        database.child("donations")
+    override fun findAll(tracksList: MutableLiveData<List<RunningModel>>) {
+        database.child("tracks")
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     Timber.i("Firebase Donation error : ${error.message}")
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val localList = ArrayList<DonationModel>()
+                    val localList = ArrayList<RunningModel>()
                     val children = snapshot.children
                     children.forEach {
-                        val donation = it.getValue(DonationModel::class.java)
-                        localList.add(donation!!)
+                        val track = it.getValue(RunningModel::class.java)
+                        localList.add(track!!)
                     }
-                    database.child("donations")
+                    database.child("tracks")
                         .removeEventListener(this)
 
-                    donationsList.value = localList
+                    tracksList.value = localList
                 }
             })
     }
 
-    override fun findAll(userid: String, donationsList: MutableLiveData<List<DonationModel>>) {
+    override fun findAll(userid: String, tracksList: MutableLiveData<List<RunningModel>>) {
 
-        database.child("user-donations").child(userid)
+        database.child("user-tracks").child(userid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     Timber.i("Firebase Donation error : ${error.message}")
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val localList = ArrayList<DonationModel>()
+                    val localList = ArrayList<RunningModel>()
                     val children = snapshot.children
                     children.forEach {
-                        val donation = it.getValue(DonationModel::class.java)
-                        localList.add(donation!!)
+                        val track = it.getValue(RunningModel::class.java)
+                        localList.add(track!!)
                     }
-                    database.child("user-donations").child(userid)
+                    database.child("user-tracks").child(userid)
                         .removeEventListener(this)
 
-                    donationsList.value = localList
+                    tracksList.value = localList
                 }
             })
     }
 
-    override fun findById(userid: String, donationid: String, donation: MutableLiveData<DonationModel>) {
+    override fun findById(userid: String, trackid: String, track: MutableLiveData<RunningModel>) {
 
-        database.child("user-donations").child(userid)
-            .child(donationid).get().addOnSuccessListener {
-                donation.value = it.getValue(DonationModel::class.java)
+        database.child("user-tracks").child(userid)
+            .child(trackid).get().addOnSuccessListener {
+                track.value = it.getValue(RunningModel::class.java)
                 Timber.i("firebase Got value ${it.value}")
             }.addOnFailureListener{
                 Timber.e("firebase Error getting data $it")
             }
     }
 
-    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, donation: DonationModel) {
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, track: RunningModel) {
         Timber.i("Firebase DB Reference : $database")
 
         val uid = firebaseUser.value!!.uid
-        val key = database.child("donations").push().key
+        val key = database.child("tracks").push().key
         if (key == null) {
             Timber.i("Firebase Error : Key Empty")
             return
         }
-        donation.uid = key
-        val donationValues = donation.toMap()
+        track.uid = key
+        val trackValues = track.toMap()
 
         val childAdd = HashMap<String, Any>()
-        childAdd["/donations/$key"] = donationValues
-        childAdd["/user-donations/$uid/$key"] = donationValues
+        childAdd["/tracks/$key"] = trackValues
+        childAdd["/user-tracks/$uid/$key"] = trackValues
 
         database.updateChildren(childAdd)
     }
 
-    override fun delete(userid: String, donationid: String) {
+    override fun delete(userid: String, trackid: String) {
 
         val childDelete : MutableMap<String, Any?> = HashMap()
-        childDelete["/donations/$donationid"] = null
-        childDelete["/user-donations/$userid/$donationid"] = null
+        childDelete["/tracks/$trackid"] = null
+        childDelete["/user-tracks/$userid/$trackid"] = null
 
         database.updateChildren(childDelete)
     }
 
-    override fun update(userid: String, donationid: String, donation: DonationModel) {
+    override fun update(userid: String, trackid: String, track: RunningModel) {
 
-        val donationValues = donation.toMap()
+        val trackValues = track.toMap()
 
         val childUpdate : MutableMap<String, Any?> = HashMap()
-        childUpdate["donations/$donationid"] = donationValues
-        childUpdate["user-donations/$userid/$donationid"] = donationValues
+        childUpdate["tracks/$trackid"] = trackValues
+        childUpdate["user-tracks/$userid/$trackid"] = trackValues
 
         database.updateChildren(childUpdate)
     }
 
     fun updateImageRef(userid: String,imageUri: String) {
 
-        val userDonations = database.child("user-donations").child(userid)
-        val allDonations = database.child("donations")
+        val userTracks = database.child("user-tracks").child(userid)
+        val allTracks = database.child("tracks")
 
-        userDonations.addListenerForSingleValueEvent(
+        userTracks.addListenerForSingleValueEvent(
             object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {}
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -124,8 +124,8 @@ object FirebaseDBManager : DonationStore {
                         //Update Users imageUri
                         it.ref.child("profilepic").setValue(imageUri)
                         //Update all donations that match 'it'
-                        val donation = it.getValue(DonationModel::class.java)
-                        allDonations.child(donation!!.uid!!)
+                        val track = it.getValue(RunningModel::class.java)
+                        allTracks.child(track!!.uid!!)
                             .child("profilepic").setValue(imageUri)
                     }
                 }

@@ -1,4 +1,4 @@
-package ie.wit.donationx.firebase
+package ie.setu.mobileapp2ca2.firebase
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="donation"
-            type="ie.setu.mobileapp2ca2.models.DonationModel" />
+            name="running"
+            type="ie.setu.mobileapp2ca2.models.RunningModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -39,7 +39,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/imageIcon"
-                android:text="@{Integer.toString(donation.amount)}"
+                android:text="@{Integer.toString(running.difficulty)}"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 tools:text="€1000" />
@@ -52,7 +52,7 @@
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/paymentamount"
-                android:text="@{donation.paymentmethod}"
+                android:text="@{running.title}"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 tools:text="@string/paypal" />
@@ -77,7 +77,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/imageIcon"
-                android:text="@{donation.message}"
+                android:text="@{running.description}"
                 android:textColor="@color/color_primary"
                 tools:text="message" />
 
