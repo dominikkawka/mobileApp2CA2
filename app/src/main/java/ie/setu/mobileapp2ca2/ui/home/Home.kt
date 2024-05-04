@@ -7,11 +7,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -151,6 +155,48 @@ class Home : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
+
+    fun changeTheme(item: MenuItem) {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle(R.string.change_theme)
+
+        val view = layoutInflater.inflate(R.layout.dialog_layout, null)
+        alertDialogBuilder.setView(view)
+
+        val radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
+
+        alertDialogBuilder.setPositiveButton("Confirm") { dialog, _ ->
+            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
+            val selectedRadioButton = view.findViewById<RadioButton>(selectedRadioButtonId)
+            val selectedOption = selectedRadioButton.text.toString()
+
+            when (selectedOption) {
+                "Day Theme" -> {
+                    toggleNightMode(false)
+                    //Timber.i(""+selectedOption)
+                }
+                "Night Theme" -> {
+                    toggleNightMode(true)
+                    //Timber.i(""+selectedOption)
+                }
+            }
+            dialog.dismiss()
+        }
+
+        alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialogBuilder.create().show()
+    }
+    fun toggleNightMode(enableNightMode: Boolean) {
+        val mode = if (enableNightMode) {
+            AppCompatDelegate.MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
+        AppCompatDelegate.setDefaultNightMode(mode)
+    }
+
 
     private fun registerImagePickerCallback() {
         intentLauncher =
