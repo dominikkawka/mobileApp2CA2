@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import ie.setu.mobileapp2ca2.R
-import ie.setu.mobileapp2ca2.databinding.FragmentDonateBinding
+import ie.setu.mobileapp2ca2.databinding.FragmentRunningBinding
 import ie.setu.mobileapp2ca2.models.RunningModel
 import ie.setu.mobileapp2ca2.ui.auth.LoggedInViewModel
 import ie.setu.mobileapp2ca2.ui.map.MapsViewModel
@@ -27,7 +27,7 @@ import ie.setu.mobileapp2ca2.ui.report.ReportViewModel
 class RunningFragment : Fragment() {
 
     var totalTracks = 0
-    private var _fragBinding: FragmentDonateBinding? = null
+    private var _fragBinding: FragmentRunningBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val fragBinding get() = _fragBinding!!
@@ -44,7 +44,7 @@ class RunningFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _fragBinding = FragmentDonateBinding.inflate(inflater, container, false)
+        _fragBinding = FragmentRunningBinding.inflate(inflater, container, false)
         val root = fragBinding.root
         // activity?.title = getString(R.string.action_donate)
         setupMenu()
@@ -65,14 +65,6 @@ class RunningFragment : Fragment() {
         return root;
     }
 
-//    companion object {
-//        @JvmStatic
-//        fun newInstance() =
-//                DonateFragment().apply {
-//                    arguments = Bundle().apply {}
-//                }
-//    }
-
     private fun render(status: Boolean) {
         when (status) {
             true -> {
@@ -87,7 +79,7 @@ class RunningFragment : Fragment() {
         }
     }
 
-    fun setButtonListener(layout: FragmentDonateBinding) {
+    fun setButtonListener(layout: FragmentRunningBinding) {
         layout.donateButton.setOnClickListener {
             val amount = if (layout.paymentAmount.text.isNotEmpty())
                 layout.paymentAmount.text.toString().toInt() else layout.amountPicker.value
@@ -127,19 +119,6 @@ class RunningFragment : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.menu_donate, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return NavigationUI.onNavDestinationSelected(item,
-//                requireView().findNavController()) || super.onOptionsItemSelected(item)
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

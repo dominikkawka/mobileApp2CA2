@@ -72,4 +72,19 @@
         <item name="colorControlActivated">@color/colorWhite</item>
         <item name="colorControlHighlight">@color/black</item>
     </style>
+
+    <!-- NIGHT MODE -->
+
+    <style name="Theme.MobileApp2CA2Night" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#FFC0CB</item>
+        <item name="colorPrimaryVariant">@color/color_secondary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
 </resources>

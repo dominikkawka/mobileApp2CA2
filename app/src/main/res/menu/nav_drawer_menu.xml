@@ -44,4 +44,14 @@
                 android:title="@string/sign_out" />
         </menu>
     </item>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_change_theme"
+                android:icon="@drawable/ic_menu_nightmode"
+                android:onClick="changeTheme"
+                android:title="@string/change_theme" />
+        </menu>
+    </item>
 </menu>
