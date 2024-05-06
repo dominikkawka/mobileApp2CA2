@@ -2,12 +2,14 @@ package ie.setu.mobileapp2ca2.ui.report
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -34,6 +36,7 @@ import ie.setu.mobileapp2ca2.utils.SwipeToEditCallback
 import ie.setu.mobileapp2ca2.utils.createLoader
 import ie.setu.mobileapp2ca2.utils.hideLoader
 import ie.setu.mobileapp2ca2.utils.showLoader
+import timber.log.Timber
 
 class ReportFragment : Fragment(), RunningClickListener {
 
@@ -116,6 +119,23 @@ class ReportFragment : Fragment(), RunningClickListener {
                     if (isChecked) reportViewModel.loadAll()
                     else reportViewModel.load()
                 }
+
+                val searchBar = menu.findItem(R.id.action_search) as MenuItem
+                val search = searchBar.actionView as SearchView
+
+                search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
+
+                    override fun onQueryTextChange(title: String?): Boolean {
+                        title?.let {
+                            reportViewModel.filter(title)
+                        }
+                        return true
+                    }
+                })
+
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

@@ -127,5 +127,9 @@ object RunningManager : RunningStore {
             }
         })
     }
+
+    override fun filterByTitle(title: String, tracksList: MutableLiveData<List<RunningModel>>) {
+        TODO("Not yet implemented")
+    }
 }
 

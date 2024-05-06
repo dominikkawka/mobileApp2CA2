@@ -8,6 +8,12 @@
         android:title="@string/action_donate"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:title="Search"/>
+    <item
         android:id="@+id/toggleDonations"
         android:title=""
         app:actionLayout="@layout/togglebutton_layout"

@@ -4,14 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 
 interface RunningStore {
-    fun findAll(donationsList:
+    fun findAll(tracksList:
                 MutableLiveData<List<RunningModel>>)
     fun findAll(userid:String,
-                donationsList:
+                tracksList:
                 MutableLiveData<List<RunningModel>>)
-    fun findById(userid:String, donationid: String,
-                 donation: MutableLiveData<RunningModel>)
-    fun create(firebaseUser: MutableLiveData<FirebaseUser>, donation: RunningModel)
-    fun delete(userid:String, donationid: String)
-    fun update(userid:String, donationid: String, donation: RunningModel)
+    fun findById(userid:String, runningId: String,
+                 running: MutableLiveData<RunningModel>)
+    fun create(firebaseUser: MutableLiveData<FirebaseUser>, running: RunningModel)
+    fun delete(userid:String, runningId: String)
+    fun update(userid:String, runningId: String, running: RunningModel)
+    fun filterByTitle(title: String, tracksList: MutableLiveData<List<RunningModel>>)
 }
