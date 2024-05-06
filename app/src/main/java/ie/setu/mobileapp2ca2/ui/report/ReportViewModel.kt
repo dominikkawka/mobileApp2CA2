@@ -34,7 +34,6 @@ class ReportViewModel : ViewModel() {
 
     fun delete(userid: String, id: String) {
         try {
-            //DonationManager.delete(userid,id)
             FirebaseDBManager.delete(userid,id)
             Timber.i("Report Delete Success")
         }
@@ -50,6 +49,15 @@ class ReportViewModel : ViewModel() {
             Timber.i("Report LoadAll Success : ${tracksList.value.toString()}")
         }
         catch (e: Exception) {
+            Timber.i("Report LoadAll Error : $e.message")
+        }
+    }
+
+    fun filter(title: String) {
+        try {
+            FirebaseDBManager.filterByTitle(title, tracksList)
+            Timber.i("Report LoadAll Success : ${tracksList.value.toString()}")
+        } catch (e: Exception) {
             Timber.i("Report LoadAll Error : $e.message")
         }
     }

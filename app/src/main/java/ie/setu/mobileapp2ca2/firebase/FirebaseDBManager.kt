@@ -131,4 +131,25 @@ object FirebaseDBManager : RunningStore {
                 }
             })
     }
+
+    override fun filterByTitle(title: String, tracksList: MutableLiveData<List<RunningModel>>) {
+        database.child("tracks")
+            .orderByChild("title")
+            .startAt(title)
+            .endAt(title + "\uf8ff")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val filteredTracks = ArrayList<RunningModel>()
+                    for (trackSnapshot in snapshot.children) {
+                        val track = trackSnapshot.getValue(RunningModel::class.java)
+                        track?.let { filteredTracks.add(it) }
+                    }
+                    tracksList.value = filteredTracks
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.e("Firebase Error: ${error.message}")
+                }
+            })
+    }
 }
