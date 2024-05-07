@@ -6,12 +6,13 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ie.setu.mobileapp2ca2.R
-import ie.setu.mobileapp2ca2.databinding.CardDonationBinding
+import ie.setu.mobileapp2ca2.databinding.CardTracksBinding
 import ie.setu.mobileapp2ca2.models.RunningModel
 import ie.setu.mobileapp2ca2.utils.customTransformation
+import com.google.firebase.database.*
 
 interface RunningClickListener {
-    fun onDonationClick(track: RunningModel)
+    fun onTrackClick(track: RunningModel)
 }
 
 class RunningAdapter constructor(private var tracks: ArrayList<RunningModel>,
@@ -20,7 +21,7 @@ class RunningAdapter constructor(private var tracks: ArrayList<RunningModel>,
     : RecyclerView.Adapter<RunningAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardDonationBinding
+        val binding = CardTracksBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
 
         return MainHolder(binding,readOnly)
@@ -38,7 +39,7 @@ class RunningAdapter constructor(private var tracks: ArrayList<RunningModel>,
 
     override fun getItemCount(): Int = tracks.size
 
-    inner class MainHolder(val binding : CardDonationBinding, private val readOnly : Boolean) :
+    inner class MainHolder(val binding : CardTracksBinding, private val readOnly : Boolean) :
         RecyclerView.ViewHolder(binding.root) {
         val readOnlyRow = readOnly
 
@@ -46,7 +47,28 @@ class RunningAdapter constructor(private var tracks: ArrayList<RunningModel>,
             binding.root.tag = track
             binding.running = track
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
-            binding.root.setOnClickListener { listener.onDonationClick(track) }
+            binding.root.setOnClickListener { listener.onTrackClick(track) }
+
+            var database: DatabaseReference = FirebaseDatabase.getInstance().reference
+            val favouriteQuery = database.child("favourites").child(track.uid!!)
+            //TODO: Rewrite this, dataSnapshot.exists() does everything,
+            // is favouriteQuery !== null even needed?
+            if (favouriteQuery !== null) {
+                favouriteQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            binding.imagefavourite.setImageResource(R.mipmap.ic_launcher_round)
+                        } else {
+                            binding.imagefavourite.setImageResource(R.drawable.ic_menu_aboutus)
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        //
+                    }
+                })
+            }
+
             binding.executePendingBindings()
             customTransformation()?.let {
                 Picasso.get().load(track.profilepic.toUri())

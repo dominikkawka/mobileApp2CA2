@@ -152,4 +152,25 @@ object FirebaseDBManager : RunningStore {
                 }
             })
     }
+
+    override fun addToFavourites(trackUid: String, userid: String) {
+        database.child("favourites").child(userid).push().setValue(trackUid)
+    }
+
+    override fun removeFromFavourites(trackUid: String, userid: String) {
+        database.child("favourites").child(userid).orderByValue().equalTo(trackUid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (childSnapshot in snapshot.children) {
+                        childSnapshot.ref.removeValue()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.e("Firebase Error: ${error.message}")
+                }
+            })
+    }
+
+
 }

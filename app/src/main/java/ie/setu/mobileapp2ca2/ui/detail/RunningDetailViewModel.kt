@@ -14,18 +14,18 @@ class RunningDetailViewModel : ViewModel() {
         get() = running
         set(value) {running.value = value.value}
 
-    fun getDonation(userid:String, id: String) {
+    fun getTrack(userid:String, id: String) {
         try {
             FirebaseDBManager.findById(userid, id, running)
-            Timber.i("Detail getDonation() Success : ${
+            Timber.i("Detail getTrack() Success : ${
                 running.value.toString()}")
         }
         catch (e: Exception) {
-            Timber.i("Detail getDonation() Error : $e.message")
+            Timber.i("Detail getTrack() Error : $e.message")
         }
     }
 
-    fun updateDonation(userid:String, id: String,running: RunningModel) {
+    fun updateTrack(userid:String, id: String, running: RunningModel) {
         try {
             FirebaseDBManager.update(userid, id, running)
             Timber.i("Detail update() Success : $running")
