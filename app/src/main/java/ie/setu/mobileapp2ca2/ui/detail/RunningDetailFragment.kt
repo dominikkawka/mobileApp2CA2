@@ -34,7 +34,7 @@ class RunningDetailFragment : Fragment() {
         val root = fragBinding.root
 
         fragBinding.editDonationButton.setOnClickListener {
-            detailViewModel.updateDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!,
+            detailViewModel.updateTrack(loggedInViewModel.liveFirebaseUser.value?.uid!!,
                 args.runningid, fragBinding.runningvm?.observableDonation!!.value!!)
             findNavController().navigateUp()
         }
@@ -43,6 +43,14 @@ class RunningDetailFragment : Fragment() {
             reportViewModel.delete(loggedInViewModel.liveFirebaseUser.value?.email!!,
                 detailViewModel.observableDonation.value?.uid!!)
             findNavController().navigateUp()
+        }
+
+        fragBinding.addFavouriteButton.setOnClickListener {
+            reportViewModel.addToFavourites(loggedInViewModel.liveFirebaseUser.value?.uid!!, detailViewModel.observableDonation.value?.uid!!)
+        }
+
+        fragBinding.removeFavouriteButton.setOnClickListener {
+            reportViewModel.removeFromFavourites(loggedInViewModel.liveFirebaseUser.value?.uid!!, detailViewModel.observableDonation.value?.uid!!)
         }
 
         detailViewModel = ViewModelProvider(this).get(RunningDetailViewModel::class.java)
@@ -58,7 +66,7 @@ class RunningDetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        detailViewModel.getDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!, args.runningid)
+        detailViewModel.getTrack(loggedInViewModel.liveFirebaseUser.value?.uid!!, args.runningid)
 
     }
 

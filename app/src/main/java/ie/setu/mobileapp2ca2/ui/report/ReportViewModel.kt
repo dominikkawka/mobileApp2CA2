@@ -61,4 +61,22 @@ class ReportViewModel : ViewModel() {
             Timber.i("Report LoadAll Error : $e.message")
         }
     }
+
+    fun addToFavourites(trackUid: String, userid: String) {
+        try {
+            FirebaseDBManager.addToFavourites(trackUid, userid)
+            Timber.i("Add to favorites Success")
+        } catch (e: Exception) {
+            Timber.i("Add to favorites Error : $e.message")
+        }
+    }
+
+    fun removeFromFavourites(trackUid: String, userid: String) {
+        try {
+            FirebaseDBManager.removeFromFavourites(trackUid, userid)
+            Timber.i("Remove from favorites Success")
+        } catch (e: Exception) {
+            Timber.i("Remove from favorites Error : $e.message")
+        }
+    }
 }

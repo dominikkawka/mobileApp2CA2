@@ -91,7 +91,7 @@ class ReportFragment : Fragment(), RunningClickListener {
 
         val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                onDonationClick(viewHolder.itemView.tag as RunningModel)
+                onTrackClick(viewHolder.itemView.tag as RunningModel)
             }
         }
         val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
@@ -157,7 +157,7 @@ class ReportFragment : Fragment(), RunningClickListener {
         }
     }
 
-    override fun onDonationClick(track: RunningModel) {
+    override fun onTrackClick(track: RunningModel) {
         val action = ReportFragmentDirections.actionReportFragmentToDonationDetailFragment(track.uid!!)
         if(!reportViewModel.readOnly.value!!)
             findNavController().navigate(action)

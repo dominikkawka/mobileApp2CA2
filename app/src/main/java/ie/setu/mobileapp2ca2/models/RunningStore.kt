@@ -15,4 +15,6 @@ interface RunningStore {
     fun delete(userid:String, runningId: String)
     fun update(userid:String, runningId: String, running: RunningModel)
     fun filterByTitle(title: String, tracksList: MutableLiveData<List<RunningModel>>)
+    fun addToFavourites(trackUid: String, userid: String)
+    fun removeFromFavourites(trackUid: String, userid: String)
 }
