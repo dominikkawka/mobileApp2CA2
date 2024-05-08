@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -23,6 +24,7 @@ import ie.setu.mobileapp2ca2.models.RunningModel
 import ie.setu.mobileapp2ca2.ui.auth.LoggedInViewModel
 import ie.setu.mobileapp2ca2.ui.map.MapsViewModel
 import ie.setu.mobileapp2ca2.ui.report.ReportViewModel
+import kotlin.time.Duration.Companion.seconds
 
 class RunningFragment : Fragment() {
 
@@ -62,6 +64,9 @@ class RunningFragment : Fragment() {
             fragBinding.paymentAmount.setText("$newVal")
         }
         setButtonListener(fragBinding)
+
+        val welcomeUserText = "Welcome, ${loggedInViewModel.liveFirebaseUser.value?.displayName}"
+        fragBinding.runningTitle.text = welcomeUserText
         return root;
     }
 
