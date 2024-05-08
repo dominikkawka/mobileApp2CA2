@@ -82,6 +82,7 @@ class MapsFragment : Fragment() {
     }
     private fun render(tracksList: ArrayList<RunningModel>) {
         var markerColour: Float
+        var markerColourEnd: Float
         if (tracksList.isNotEmpty()) {
             mapsViewModel.map.clear()
             tracksList.forEach {
@@ -90,17 +91,31 @@ class MapsFragment : Fragment() {
                 else
                     BitmapDescriptorFactory.HUE_RED
 
+                markerColourEnd = if(it.email.equals(this.reportViewModel.liveFirebaseUser.value!!.email))
+                    BitmapDescriptorFactory.HUE_MAGENTA
+                else
+                    BitmapDescriptorFactory.HUE_GREEN
+
                 mapsViewModel.map.addMarker(
                     MarkerOptions().position(LatLng(it.startLatitude, it.startLongitude))
-                        .title("${it.title} €${it.difficulty}")
+                        .title("${it.title} Starting Point: €${it.difficulty}")
                         .snippet(it.description)
                         .icon(BitmapDescriptorFactory.defaultMarker(markerColour ))
-                )        }
+                )
+
+                mapsViewModel.map.addMarker(
+                    MarkerOptions().position(LatLng(it.endLatitude, it.endLongitude))
+                        .title("${it.title} Ending Point: €${it.difficulty}")
+                        .snippet(it.description)
+                        .icon(BitmapDescriptorFactory.defaultMarker(markerColourEnd ))
+                )
+
+            }
         }
     }
     override fun onResume() {
         super.onResume()
-        showLoader(loader, "Downloading Donations")
+        showLoader(loader, "Downloading Tracks")
         loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner) {
                 firebaseUser -> if (firebaseUser != null) {
             reportViewModel.liveFirebaseUser.value = firebaseUser
