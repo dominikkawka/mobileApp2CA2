@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/donateFragment"
         android:name="ie.setu.mobileapp2ca2.ui.running.RunningFragment"
-        android:label="@string/action_donate"
-        tools:layout="@layout/fragment_donate" >
+        android:label="@string/action_track"
+        tools:layout="@layout/fragment_running" >
         <action
             android:id="@+id/action_donateFragment_to_reportFragment"
             app:destination="@id/reportFragment"
@@ -41,7 +41,7 @@
         android:id="@+id/donationDetailFragment"
         android:name="ie.setu.mobileapp2ca2.ui.detail.RunningDetailFragment"
         android:label="Donation Detail"
-        tools:layout="@layout/fragment_donation_detail" >
+        tools:layout="@layout/fragment_running_detail" >
         <action
             android:id="@+id/action_donationDetailFragment_to_reportFragment"
             app:destination="@id/reportFragment" />

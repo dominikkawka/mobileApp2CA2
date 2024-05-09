@@ -34,12 +34,21 @@ class ReportViewModel : ViewModel() {
 
     fun delete(userid: String, id: String) {
         try {
-            //DonationManager.delete(userid,id)
             FirebaseDBManager.delete(userid,id)
             Timber.i("Report Delete Success")
         }
         catch (e: Exception) {
             Timber.i("Report Delete Error : $e.message")
+        }
+    }
+
+    fun update(userid:String, id: String, running: RunningModel) {
+        try {
+            FirebaseDBManager.update(userid, id, running)
+            Timber.i("Detail update() Success : $running")
+        }
+        catch (e: Exception) {
+            Timber.i("Detail update() Error : $e.message")
         }
     }
 
@@ -51,6 +60,33 @@ class ReportViewModel : ViewModel() {
         }
         catch (e: Exception) {
             Timber.i("Report LoadAll Error : $e.message")
+        }
+    }
+
+    fun filter(title: String) {
+        try {
+            FirebaseDBManager.filterByTitle(title, tracksList)
+            Timber.i("Report LoadAll Success : ${tracksList.value.toString()}")
+        } catch (e: Exception) {
+            Timber.i("Report LoadAll Error : $e.message")
+        }
+    }
+
+    fun addToFavourites(trackUid: String, userid: String) {
+        try {
+            FirebaseDBManager.addToFavourites(trackUid, userid)
+            Timber.i("Add to favorites Success")
+        } catch (e: Exception) {
+            Timber.i("Add to favorites Error : $e.message")
+        }
+    }
+
+    fun removeFromFavourites(trackUid: String, userid: String) {
+        try {
+            FirebaseDBManager.removeFromFavourites(trackUid, userid)
+            Timber.i("Remove from favorites Success")
+        } catch (e: Exception) {
+            Timber.i("Remove from favorites Error : $e.message")
         }
     }
 }

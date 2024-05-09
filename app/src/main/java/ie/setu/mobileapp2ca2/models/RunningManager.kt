@@ -127,5 +127,17 @@ object RunningManager : RunningStore {
             }
         })
     }
+
+    override fun filterByTitle(title: String, tracksList: MutableLiveData<List<RunningModel>>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun addToFavourites(trackUid: String, userid: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeFromFavourites(trackUid: String, userid: String) {
+        TODO("Not yet implemented")
+    }
 }
 
