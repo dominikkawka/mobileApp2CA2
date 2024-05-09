@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import ie.setu.mobileapp2ca2.databinding.FragmentDonationDetailBinding
+import ie.setu.mobileapp2ca2.databinding.FragmentRunningDetailBinding
 import ie.setu.mobileapp2ca2.ui.auth.LoggedInViewModel
 import ie.setu.mobileapp2ca2.ui.report.ReportViewModel
 
@@ -18,7 +18,7 @@ class RunningDetailFragment : Fragment() {
 
     private lateinit var detailViewModel: RunningDetailViewModel
     private val args by navArgs<RunningDetailFragmentArgs>()
-    private var _fragBinding: FragmentDonationDetailBinding? = null
+    private var _fragBinding: FragmentRunningDetailBinding? = null
     private val fragBinding get() = _fragBinding!!
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
     private val reportViewModel : ReportViewModel by activityViewModels()
@@ -30,35 +30,49 @@ class RunningDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _fragBinding = FragmentDonationDetailBinding.inflate(inflater, container, false)
+        _fragBinding = FragmentRunningDetailBinding.inflate(inflater, container, false)
         val root = fragBinding.root
 
         fragBinding.editDonationButton.setOnClickListener {
-            detailViewModel.updateDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!,
-                args.runningid, fragBinding.runningvm?.observableDonation!!.value!!)
+            reportViewModel.update(loggedInViewModel.liveFirebaseUser.value?.uid!!,
+                args.runningid, fragBinding.runningvm?.observableTrack!!.value!!)
             findNavController().navigateUp()
         }
 
         fragBinding.deleteDonationButton.setOnClickListener {
             reportViewModel.delete(loggedInViewModel.liveFirebaseUser.value?.email!!,
-                detailViewModel.observableDonation.value?.uid!!)
+                detailViewModel.observableTrack.value?.uid!!)
             findNavController().navigateUp()
+
+            //detailViewModel.deleteTrack(loggedInViewModel.liveFirebaseUser.value?.email!!,
+            //    detailViewModel.observableTrack.value?.uid!!)
+            //findNavController().navigateUp()
+        }
+
+        fragBinding.addFavouriteButton.setOnClickListener {
+            reportViewModel.addToFavourites(loggedInViewModel.liveFirebaseUser.value?.uid!!, detailViewModel.observableTrack.value?.uid!!)
+        }
+
+        fragBinding.removeFavouriteButton.setOnClickListener {
+            reportViewModel.removeFromFavourites(loggedInViewModel.liveFirebaseUser.value?.uid!!, detailViewModel.observableTrack.value?.uid!!)
         }
 
         detailViewModel = ViewModelProvider(this).get(RunningDetailViewModel::class.java)
-        detailViewModel.observableDonation.observe(viewLifecycleOwner, Observer { render() })
+        detailViewModel.observableTrack.observe(viewLifecycleOwner, Observer { render() })
+
         return root
     }
 
     private fun render() {
-        fragBinding.editMessage.setText("A Message")
-        fragBinding.editUpvotes.setText("0")
-        fragBinding.runningvm = detailViewModel
+            fragBinding.editTextDistance.setText("0 km")
+            fragBinding.editTextWeather.setText("Clear")
+            fragBinding.editTextDifficulty.setText("1")
+            fragBinding.runningvm = detailViewModel
     }
 
     override fun onResume() {
         super.onResume()
-        detailViewModel.getDonation(loggedInViewModel.liveFirebaseUser.value?.uid!!, args.runningid)
+        detailViewModel.getTrack(loggedInViewModel.liveFirebaseUser.value?.uid!!, args.runningid)
 
     }
 

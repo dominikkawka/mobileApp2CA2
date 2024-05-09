@@ -10,28 +10,37 @@ import timber.log.Timber
 class RunningDetailViewModel : ViewModel() {
     private val running = MutableLiveData<RunningModel>()
 
-    var observableDonation: LiveData<RunningModel>
+    var observableTrack: LiveData<RunningModel>
         get() = running
         set(value) {running.value = value.value}
 
-    fun getDonation(userid:String, id: String) {
+    fun getTrack(userid:String, id: String) {
         try {
             FirebaseDBManager.findById(userid, id, running)
-            Timber.i("Detail getDonation() Success : ${
+            Timber.i("Detail getTrack() Success : ${
                 running.value.toString()}")
         }
         catch (e: Exception) {
-            Timber.i("Detail getDonation() Error : $e.message")
+            Timber.i("Detail getTrack() Error : $e.message")
         }
     }
 
-    fun updateDonation(userid:String, id: String,running: RunningModel) {
+    fun updateTrack(userid:String, id: String, running: RunningModel) {
         try {
             FirebaseDBManager.update(userid, id, running)
             Timber.i("Detail update() Success : $running")
         }
         catch (e: Exception) {
             Timber.i("Detail update() Error : $e.message")
+        }
+    }
+
+    fun deleteTrack(userid:String, id: String) {
+        try {
+            FirebaseDBManager.delete(userid, id)
+            Timber.i("Report Delete Success")
+        } catch (e: Exception) {
+            Timber.i("Report Delete Error : $e.message")
         }
     }
 }

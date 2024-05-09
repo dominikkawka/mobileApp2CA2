@@ -2,12 +2,14 @@ package ie.setu.mobileapp2ca2.ui.report
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -34,6 +36,7 @@ import ie.setu.mobileapp2ca2.utils.SwipeToEditCallback
 import ie.setu.mobileapp2ca2.utils.createLoader
 import ie.setu.mobileapp2ca2.utils.hideLoader
 import ie.setu.mobileapp2ca2.utils.showLoader
+import timber.log.Timber
 
 class ReportFragment : Fragment(), RunningClickListener {
 
@@ -88,7 +91,7 @@ class ReportFragment : Fragment(), RunningClickListener {
 
         val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                onDonationClick(viewHolder.itemView.tag as RunningModel)
+                onTrackClick(viewHolder.itemView.tag as RunningModel)
             }
         }
         val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
@@ -116,6 +119,23 @@ class ReportFragment : Fragment(), RunningClickListener {
                     if (isChecked) reportViewModel.loadAll()
                     else reportViewModel.load()
                 }
+
+                val searchBar = menu.findItem(R.id.action_search) as MenuItem
+                val search = searchBar.actionView as SearchView
+
+                search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
+
+                    override fun onQueryTextChange(title: String?): Boolean {
+                        title?.let {
+                            reportViewModel.filter(title)
+                        }
+                        return true
+                    }
+                })
+
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -130,14 +150,14 @@ class ReportFragment : Fragment(), RunningClickListener {
         fragBinding.recyclerView.adapter = RunningAdapter(tracksList,this, reportViewModel.readOnly.value!!)
         if (tracksList.isEmpty()) {
             fragBinding.recyclerView.visibility = View.GONE
-            fragBinding.donationsNotFound.visibility = View.VISIBLE
+            fragBinding.tracksNotFound.visibility = View.VISIBLE
         } else {
             fragBinding.recyclerView.visibility = View.VISIBLE
-            fragBinding.donationsNotFound.visibility = View.GONE
+            fragBinding.tracksNotFound.visibility = View.GONE
         }
     }
 
-    override fun onDonationClick(track: RunningModel) {
+    override fun onTrackClick(track: RunningModel) {
         val action = ReportFragmentDirections.actionReportFragmentToDonationDetailFragment(track.uid!!)
         if(!reportViewModel.readOnly.value!!)
             findNavController().navigate(action)
