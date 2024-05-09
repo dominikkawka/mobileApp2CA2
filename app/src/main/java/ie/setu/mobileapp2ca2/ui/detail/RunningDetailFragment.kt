@@ -64,15 +64,10 @@ class RunningDetailFragment : Fragment() {
     }
 
     private fun render() {
-        val track = detailViewModel.observableTrack.value
-        track?.let { // Safely access track
-            val distanceInKm = it.distance / 1000.0
-            val formattedDistance = String.format("%.3f", distanceInKm)
-            fragBinding.editTextDistance.setText("$formattedDistance km")
-            fragBinding.editTextWeather.setText(it.weatherCondition)
-            fragBinding.editTextDifficulty.setText(it.difficulty.toString())
+            fragBinding.editTextDistance.setText("0 km")
+            fragBinding.editTextWeather.setText("Clear")
+            fragBinding.editTextDifficulty.setText("1")
             fragBinding.runningvm = detailViewModel
-        }
     }
 
     override fun onResume() {

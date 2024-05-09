@@ -36,9 +36,9 @@
     <string name="aboutus_title">Homer for President !!</string>
     <string name="aboutus_message">Hi, I\'m Homer\n\nPlease vote for me.\n\n Please Please Please Please!!</string>
 
-    <string name="donationsNotFound">No Donations Yet…\nGo Make a Donation!</string>
+    <string name="tracksNotFound">No Tracks Yet…\nGo Run!</string>
     <string name="donationError">Error : Couldn\'t Make a Donation…</string>
-    <string name="donationDetails">Donation Details</string>
+    <string name="tracksDetails">Track Details</string>
 
     <string name="amt">Amount :</string>
     <string name="payment">Payment :</string>
