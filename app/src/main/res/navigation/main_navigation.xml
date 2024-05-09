@@ -41,7 +41,7 @@
         android:id="@+id/donationDetailFragment"
         android:name="ie.setu.mobileapp2ca2.ui.detail.RunningDetailFragment"
         android:label="Donation Detail"
-        tools:layout="@layout/fragment_donation_detail" >
+        tools:layout="@layout/fragment_running_detail" >
         <action
             android:id="@+id/action_donationDetailFragment_to_reportFragment"
             app:destination="@id/reportFragment" />

@@ -10,7 +10,7 @@ import timber.log.Timber
 class RunningDetailViewModel : ViewModel() {
     private val running = MutableLiveData<RunningModel>()
 
-    var observableDonation: LiveData<RunningModel>
+    var observableTrack: LiveData<RunningModel>
         get() = running
         set(value) {running.value = value.value}
 
@@ -32,6 +32,15 @@ class RunningDetailViewModel : ViewModel() {
         }
         catch (e: Exception) {
             Timber.i("Detail update() Error : $e.message")
+        }
+    }
+
+    fun deleteTrack(userid:String, id: String) {
+        try {
+            FirebaseDBManager.delete(userid, id)
+            Timber.i("Report Delete Success")
+        } catch (e: Exception) {
+            Timber.i("Report Delete Error : $e.message")
         }
     }
 }

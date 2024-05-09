@@ -42,6 +42,16 @@ class ReportViewModel : ViewModel() {
         }
     }
 
+    fun update(userid:String, id: String, running: RunningModel) {
+        try {
+            FirebaseDBManager.update(userid, id, running)
+            Timber.i("Detail update() Success : $running")
+        }
+        catch (e: Exception) {
+            Timber.i("Detail update() Error : $e.message")
+        }
+    }
+
     fun loadAll() {
         try {
             readOnly.value = true
