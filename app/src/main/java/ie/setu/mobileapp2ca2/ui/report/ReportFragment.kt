@@ -150,10 +150,10 @@ class ReportFragment : Fragment(), RunningClickListener {
         fragBinding.recyclerView.adapter = RunningAdapter(tracksList,this, reportViewModel.readOnly.value!!)
         if (tracksList.isEmpty()) {
             fragBinding.recyclerView.visibility = View.GONE
-            fragBinding.donationsNotFound.visibility = View.VISIBLE
+            fragBinding.tracksNotFound.visibility = View.VISIBLE
         } else {
             fragBinding.recyclerView.visibility = View.VISIBLE
-            fragBinding.donationsNotFound.visibility = View.GONE
+            fragBinding.tracksNotFound.visibility = View.GONE
         }
     }
 

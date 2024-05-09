@@ -11,6 +11,7 @@
 
     <ImageView
         android:id="@+id/imageView3"
+        android:contentDescription="@string/aboutus_message"
         android:layout_width="182dp"
         android:layout_height="257dp"
         app:layout_constraintBottom_toBottomOf="parent"

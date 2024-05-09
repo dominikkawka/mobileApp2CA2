@@ -57,9 +57,9 @@ class RunningAdapter constructor(private var tracks: ArrayList<RunningModel>,
                 favouriteQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            binding.imagefavourite.setImageResource(R.mipmap.ic_launcher_round)
+                            binding.imagefavourite.setImageResource(R.drawable.ic_card_favourite)
                         } else {
-                            binding.imagefavourite.setImageResource(R.drawable.ic_menu_aboutus)
+                            binding.imagefavourite.setImageResource(R.drawable.ic_card_regular)
                         }
                     }
 
