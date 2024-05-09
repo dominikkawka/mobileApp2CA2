@@ -2,7 +2,7 @@
     <string name="app_name">MobileApp2CA2</string>
     <string name="welcomeString">Welcome Homer</string>
     <string name="runningTitle">Name your track</string>
-    <string name="donateButton">Donate</string>
+    <string name="donateButton">Running</string>
     <string name="runningDescription">Give a short description of the track</string>
     <string name="weatherClear">Clear</string>
     <string name="weatherSunny">Sunny</string>
@@ -13,7 +13,7 @@
     <string name="amount">Amount</string>
     <string name="reportTitle">Donations Report</string>
     <string name="enter_difficulty">Enter Difficulty</string>
-    <string name="action_donate">Donate</string>
+    <string name="action_track">Tracks</string>
     <string name="action_report">Report</string>
     <string name="action_location">Location</string>
 
@@ -45,7 +45,7 @@
     <string name="message">Message :</string>
     <string name="upvotes">UpVotes :</string>
 
-    <string name="messageLoading">Please Wait while the Donations are Loading...</string>
+    <string name="messageLoading">Please Wait while the Tracks are Loading...</string>
 
     <string name="label_emailpassword">Email/Password Authentication</string>
     <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
@@ -77,5 +77,7 @@
     <string name="change_theme">Change Theme</string>
     <string name="day_theme">Day Theme</string>
     <string name="night_theme">Night Theme</string>
+
+    <string name="fav_icon">Favourite Icon</string>
 
 </resources>

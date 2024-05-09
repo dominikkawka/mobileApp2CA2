@@ -59,6 +59,7 @@
 
             <ImageView
                 android:id="@+id/imagefavourite"
+                android:contentDescription="@string/fav_icon"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_alignParentTop="true"

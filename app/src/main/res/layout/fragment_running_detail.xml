@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.114"
-                android:drawableStart="@drawable/ic_menu_report"
+                android:drawableStart="@drawable/ic_details"
                 android:background="@color/grey_300"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +72,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@color/grey_300"
-                android:drawableStart="@drawable/ic_menu_report"
+                android:drawableStart="@drawable/ic_details"
                 android:text="@{runningvm.observableTrack.description}"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 app:layout_constraintBottom_toBottomOf="parent"

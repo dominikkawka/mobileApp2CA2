@@ -83,7 +83,7 @@ class RunningFragment : Fragment() {
     }
 
     private fun setButtonListener(layout: FragmentRunningBinding) {
-        layout.donateButton.setOnClickListener {
+        layout.trackButton.setOnClickListener {
 
             val runningWeather = when (layout.runningWeather.checkedRadioButtonId) {
                 R.id.Clear -> "Clear"

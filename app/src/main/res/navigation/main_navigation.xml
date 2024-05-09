@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/donateFragment"
         android:name="ie.setu.mobileapp2ca2.ui.running.RunningFragment"
-        android:label="@string/action_donate"
+        android:label="@string/action_track"
         tools:layout="@layout/fragment_running" >
         <action
             android:id="@+id/action_donateFragment_to_reportFragment"
