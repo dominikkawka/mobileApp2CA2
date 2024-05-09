@@ -1,22 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MobileApp2CA2</string>
-    <string name="donateTitle">Welcome Homer</string>
-    <string name="donateSubtitle">Please Give Generously</string>
+    <string name="welcomeString">Welcome Homer</string>
+    <string name="runningTitle">Name your track</string>
     <string name="donateButton">Donate</string>
-    <string name="paypal">PayPal</string>
-    <string name="direct">Direct</string>
+    <string name="runningDescription">Give a short description of the track</string>
+    <string name="weatherClear">Clear</string>
+    <string name="weatherSunny">Sunny</string>
+    <string name="weatherCloudy">Cloudy</string>
+    <string name="weatherRainy">Rainy</string>
+    <string name="weatherTitle">Select Weather</string>
+    <string name="difficultyTitle">Select Difficulty</string>
     <string name="amount">Amount</string>
     <string name="total">Total so Far</string>
     <string name="totalSoFar">$ Total</string>
     <string name="reportTitle">Donations Report</string>
     <string name="defaultAmount">00</string>
     <string name="defaultMethod">N/A</string>
-    <string name="enter_amount">Enter Amount</string>
+    <string name="enter_difficulty">Enter Difficulty</string>
     <string name="action_donate">Donate</string>
     <string name="action_report">Report</string>
     <string name="action_location">Location</string>
 
-    <string name="total_donated">$%d</string>
+    <string name="start_track">Start Track</string>
+    <string name="end_track">Finish Track</string>
 
     <string name="action_share">Share</string>
     <string name="action_send">Send</string>

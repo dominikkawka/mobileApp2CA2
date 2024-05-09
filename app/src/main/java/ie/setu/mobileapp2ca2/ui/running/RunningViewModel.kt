@@ -15,8 +15,8 @@ class RunningViewModel : ViewModel() {
     val observableStatus: LiveData<Boolean>
         get() = status
 
-    fun addDonation(firebaseUser: MutableLiveData<FirebaseUser>,
-                    running: RunningModel) {
+    fun addTrack(firebaseUser: MutableLiveData<FirebaseUser>,
+                 running: RunningModel) {
         status.value = try {
             running.profilepic = FirebaseImageManager.imageUri.value.toString()
             FirebaseDBManager.create(firebaseUser,running)

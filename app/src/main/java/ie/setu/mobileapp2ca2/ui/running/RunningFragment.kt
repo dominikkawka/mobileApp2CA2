@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -24,23 +23,23 @@ import ie.setu.mobileapp2ca2.models.RunningModel
 import ie.setu.mobileapp2ca2.ui.auth.LoggedInViewModel
 import ie.setu.mobileapp2ca2.ui.map.MapsViewModel
 import ie.setu.mobileapp2ca2.ui.report.ReportViewModel
-import kotlin.time.Duration.Companion.seconds
+import android.location.Location.distanceBetween
+import timber.log.Timber
 
 class RunningFragment : Fragment() {
 
-    var totalTracks = 0
+    private var totalTracks = 0
     private var _fragBinding: FragmentRunningBinding? = null
-
-    // This property is only valid between onCreateView and onDestroyView.
     private val fragBinding get() = _fragBinding!!
-    private lateinit var donateViewModel: RunningViewModel
-    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+    private lateinit var runningViewModel: RunningViewModel
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private val mapsViewModel: MapsViewModel by activityViewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var distanceResults = FloatArray(1)
+    private var startLat = 0.0
+    private var startLong = 0.0
+    private var endLat = 0.0
+    private var endLong = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,75 +47,95 @@ class RunningFragment : Fragment() {
     ): View? {
         _fragBinding = FragmentRunningBinding.inflate(inflater, container, false)
         val root = fragBinding.root
-        // activity?.title = getString(R.string.action_donate)
         setupMenu()
-        donateViewModel = ViewModelProvider(this).get(RunningViewModel::class.java)
-        donateViewModel.observableStatus.observe(viewLifecycleOwner, Observer { status ->
+        runningViewModel = ViewModelProvider(this).get(RunningViewModel::class.java)
+        runningViewModel.observableStatus.observe(viewLifecycleOwner, Observer { status ->
             status?.let { render(status) }
         })
 
-        fragBinding.progressBar.max = 10000
-        fragBinding.amountPicker.minValue = 1
-        fragBinding.amountPicker.maxValue = 1000
-
-        fragBinding.amountPicker.setOnValueChangedListener { _, _, newVal ->
-            //Display the newly selected number to paymentAmount
-            fragBinding.paymentAmount.setText("$newVal")
-        }
+        fragBinding.difficultyPicker.minValue = 1
+        fragBinding.difficultyPicker.maxValue = 5
         setButtonListener(fragBinding)
 
-        val welcomeUserText = "Welcome, ${loggedInViewModel.liveFirebaseUser.value?.displayName}"
-        fragBinding.runningTitle.text = welcomeUserText
-        return root;
+        val displayName = loggedInViewModel.liveFirebaseUser.value?.displayName
+        fragBinding.welcomeUserText.text = "Welcome ${displayName ?: ""}"
+
+        fragBinding.startTrackButton.setOnClickListener {
+            startLat = mapsViewModel.currentLocation.value!!.latitude
+            startLong = mapsViewModel.currentLocation.value!!.longitude
+            Timber.i("Start $startLat, $startLong")
+        }
+
+        fragBinding.endTrackButton.setOnClickListener {
+            endLat = mapsViewModel.currentLocation.value!!.latitude
+            endLong = mapsViewModel.currentLocation.value!!.longitude
+            Timber.i("End $endLat, $endLong")
+            Timber.i("Start at End $startLat, $startLong")
+        }
+
+        return root
     }
 
     private fun render(status: Boolean) {
-        when (status) {
-            true -> {
-                view?.let {
-                    //Uncomment this if you want to immediately return to Report
-                    //findNavController().popBackStack()
-                }
-            }
-
-            false -> Toast.makeText(context, getString(R.string.donationError), Toast.LENGTH_LONG)
-                .show()
+        if (!status) {
+            Toast.makeText(context, getString(R.string.donationError), Toast.LENGTH_LONG).show()
         }
     }
 
-    fun setButtonListener(layout: FragmentRunningBinding) {
+    private fun setButtonListener(layout: FragmentRunningBinding) {
         layout.donateButton.setOnClickListener {
-            val amount = if (layout.paymentAmount.text.isNotEmpty())
-                layout.paymentAmount.text.toString().toInt() else layout.amountPicker.value
-            if (totalTracks >= layout.progressBar.max)
-                Toast.makeText(context, "Donate Amount Exceeded!", Toast.LENGTH_LONG).show()
-            else {
-                val paymentmethod =
-                    if (layout.paymentMethod.checkedRadioButtonId == R.id.Direct) "Direct" else "Paypal"
-                totalTracks += amount
-                layout.totalSoFar.text = getString(R.string.total_donated, totalTracks)
-                layout.progressBar.progress = totalTracks
-                donateViewModel.addDonation(loggedInViewModel.liveFirebaseUser,
-                    RunningModel(title = paymentmethod,difficulty = amount,
-                        email = loggedInViewModel.liveFirebaseUser.value?.email!!,
-                        startLatitude = mapsViewModel.currentLocation.value!!.latitude,
-                        startLongitude = mapsViewModel.currentLocation.value!!.longitude))
+
+            val runningWeather = when (layout.runningWeather.checkedRadioButtonId) {
+                R.id.Clear -> "Clear"
+                R.id.Sunny -> "Sunny"
+                R.id.Cloudy -> "Cloudy"
+                R.id.Rainy -> "Rainy"
+                else -> "Unknown"
             }
+
+            val difficulty = layout.difficultyPicker.value
+            if (layout.runningTitle.text.toString().isEmpty()) {
+                Toast.makeText(context, "Please name your track", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if (startLat == 0.0 || startLong == 0.0) {
+                Toast.makeText(context, "Please begin your run before submitting", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if (endLat == 0.0 || endLong == 0.0) {
+                Toast.makeText(context, "Please finish your run before submitting", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            distanceBetween(startLat, startLong, endLat, endLong, distanceResults)
+            runningViewModel.addTrack(
+                loggedInViewModel.liveFirebaseUser,
+                RunningModel(
+                    title = layout.runningTitle.text.toString(),
+                    weatherCondition = runningWeather,
+                    difficulty = difficulty,
+                    email = loggedInViewModel.liveFirebaseUser.value?.email!!,
+                    startLatitude = startLat,
+                    startLongitude = startLong,
+                    endLatitude = endLat,
+                    endLongitude = endLong,
+                    distance = distanceResults[0]
+                )
+            )
         }
     }
 
     private fun setupMenu() {
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onPrepareMenu(menu: Menu) {
-                // Handle for example visibility of menu items
-            }
+            override fun onPrepareMenu(menu: Menu) {}
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_donate, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                // Validate and handle the selected menu item
                 return NavigationUI.onNavDestinationSelected(
                     menuItem,
                     requireView().findNavController()
@@ -134,9 +153,7 @@ class RunningFragment : Fragment() {
         super.onResume()
         val reportViewModel = ViewModelProvider(this).get(ReportViewModel::class.java)
         reportViewModel.observableDonationsList.observe(viewLifecycleOwner, Observer {
-            totalTracks = reportViewModel.observableDonationsList.value!!.sumBy { it.difficulty }
-            fragBinding.progressBar.progress = totalTracks
-            fragBinding.totalSoFar.text = getString(R.string.total_donated, totalTracks)
+            totalTracks = reportViewModel.observableDonationsList.value?.sumBy { it.difficulty } ?: 0
         })
     }
 }
