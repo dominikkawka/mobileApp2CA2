@@ -79,5 +79,8 @@
     <string name="night_theme">Night Theme</string>
 
     <string name="fav_icon">Favourite Icon</string>
+    <string name="favourites">Favourites</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
 </resources>
