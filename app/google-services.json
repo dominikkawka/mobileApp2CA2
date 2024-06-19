@@ -1,9 +1,9 @@
 {
   "project_info": {
-    "project_number": "851463586735",
-    "firebase_url": "https://mobileappca2-90046-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "mobileappca2-90046",
-    "storage_bucket": "mobileappca2-90046.appspot.com"
+    "project_number": "FIREBASE_PROJECT_NUMBER",
+    "firebase_url": "FIREBASE_URL",
+    "project_id": "FIREBASE_PROJECT_ID",
+    "storage_bucket": "FIREBASE_STORAGE_BUCKET"
   },
   "client": [
     {
@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDpe9RYm-JnnjUSOEsD667M3z5qY2GQXa4"
+          "current_key": "FIREBASE_API_KEY"
         }
       ],
       "services": {
